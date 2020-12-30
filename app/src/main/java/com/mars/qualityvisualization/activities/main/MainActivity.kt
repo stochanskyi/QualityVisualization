@@ -1,7 +1,8 @@
-package com.mars.qualityvisualization
+package com.mars.qualityvisualization.activities.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mars.qualityvisualization.R
 import com.mars.qualityvisualization.views.polarChartView.PolarChartView
 import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinates
 import java.lang.Math.PI

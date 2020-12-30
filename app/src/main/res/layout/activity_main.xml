@@ -6,6 +6,7 @@
     tools:context=".MainActivity">
 
     <com.mars.qualityvisualization.views.polarChartView.PolarChartView
+        android:id="@+id/viewPolarChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

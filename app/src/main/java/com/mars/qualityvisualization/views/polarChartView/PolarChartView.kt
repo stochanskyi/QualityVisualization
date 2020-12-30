@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.use
 import com.mars.qualityvisualization.R
+import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinates
+import com.mars.qualityvisualization.views.polarChartView.transformer.CoordinatesTransformer.toDrawableCoordinates
 import kotlin.math.min
 
 class PolarChartView @JvmOverloads constructor(
@@ -18,18 +21,13 @@ class PolarChartView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
     companion object {
-        private const val DEFAULT_CIRCLES_COUNT = 5
+        private const val DEFAULT_CIRCLES_COUNT = 10
     }
 
-    val circlePaint: Paint = Paint()
+    private val circlePaint: Paint = Paint()
+    private val polygonPaint: Paint = Paint()
 
-    val circlesRadius: MutableList<Int> = mutableListOf()
-
-    var circlesCount: Int = DEFAULT_CIRCLES_COUNT
-        set(value) {
-            field = circlesCount
-            requestLayout()
-        }
+    private var polygonPath: Path = Path()
 
     init {
         initPaints()
@@ -40,6 +38,12 @@ class PolarChartView @JvmOverloads constructor(
         circlePaint.apply {
             style = Paint.Style.STROKE
             color = Color.GRAY
+            strokeWidth = 1f
+        }
+
+        polygonPaint.apply {
+            style = Paint.Style.STROKE
+            color = Color.RED
             strokeWidth = 1f
         }
     }
@@ -60,10 +64,30 @@ class PolarChartView @JvmOverloads constructor(
         }
     }
 
+
+    private val circlesRadius: MutableList<Int> = mutableListOf()
+
+    private fun updatePolygonPath() {
+        if (coordinates.isEmpty()) return
+
+        val drawableCoordinates = coordinates.map { it.toDrawableCoordinates(width, height) }
+
+        polygonPath = Path().apply {
+            moveTo(drawableCoordinates.first().x, drawableCoordinates.first().y)
+            for (i in 1 until drawableCoordinates.size) {
+                lineTo(drawableCoordinates[i].x, drawableCoordinates[i].y)
+            }
+            lineTo(drawableCoordinates.first().x, drawableCoordinates.first().y)
+            close()
+        }
+
+    }
+
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
         resolveCirclesSizes()
+        updatePolygonPath()
     }
 
     private fun resolveCirclesSizes() {
@@ -94,6 +118,21 @@ class PolarChartView @JvmOverloads constructor(
             canvas.drawCircle(viewCentreX, viewCenterY, it.toFloat(), circlePaint)
         }
 
+        canvas.drawPath(polygonPath, polygonPaint)
+
         super.onDraw(canvas)
     }
+
+    var circlesCount: Int = DEFAULT_CIRCLES_COUNT
+        set(value) {
+            field = value
+            requestLayout()
+        }
+
+    var coordinates: List<PolarCoordinates> = listOf()
+        set(value) {
+            field = value
+            updatePolygonPath()
+            invalidate()
+        }
 }

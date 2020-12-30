@@ -11,11 +11,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<PolarChartView>(R.id.viewPolarChart).coordinates = listOf(
-            PolarCoordinates(100f, 0f),
-            PolarCoordinates(100f, (PI / 2).toFloat()),
-            PolarCoordinates(100f, (PI).toFloat()),
-            PolarCoordinates(100f, (3 * PI / 2 - 0.4).toFloat()),
-        )
+        findViewById<PolarChartView>(R.id.viewPolarChart).apply {
+            coordinates = listOf(
+                PolarCoordinates(100f, 0f),
+                PolarCoordinates(100f, (PI / 2).toFloat()),
+                PolarCoordinates(100f, (PI).toFloat()),
+                PolarCoordinates(10f, (3 * PI / 2 - 0.4).toFloat()),
+            )
+            setSectorBounds(
+                listOf(
+                    (PI - 1).toFloat()
+                )
+            )
+        }
     }
 }

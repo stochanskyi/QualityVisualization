@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.use
 import com.mars.qualityvisualization.R
-import com.mars.qualityvisualization.views.polarChartView.models.CartesianCoordinates
 import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinates
 import com.mars.qualityvisualization.views.polarChartView.transformer.CoordinatesTransformer.toDrawableCoordinates
 import kotlin.math.min
@@ -26,12 +25,12 @@ class PolarChartView @JvmOverloads constructor(
         private const val DEFAULT_MAX_RADIUS = 100
     }
 
-    private val circlePaint: Paint = Paint()
-    private val coordinatesPaint: Paint = Paint()
+    private val circlePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val coordinatesPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val polygonFillPaint: Paint = Paint()
-    private val polygonStrokeColor: Paint = Paint()
-    private val vectorPaint: Paint = Paint()
-    private val sectorPaint: Paint = Paint()
+    private val polygonStrokeColor: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val vectorPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val sectorPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private var polygonPath: Path = Path()
 
@@ -75,6 +74,12 @@ class PolarChartView @JvmOverloads constructor(
             style = Paint.Style.STROKE
             color = Color.parseColor("#336600")
             strokeWidth = 1f
+        }
+
+        sectorPaint.apply {
+            style = Paint.Style.STROKE
+            color = Color.BLACK
+            strokeWidth = 2f
         }
     }
 
@@ -148,6 +153,7 @@ class PolarChartView @JvmOverloads constructor(
         drawVectors(canvas, viewCenterX, viewCenterY)
         canvas.drawPath(polygonPath, polygonStrokeColor)
 
+        drawSectors(canvas, viewCenterX, viewCenterY)
 
         super.onDraw(canvas)
     }
@@ -167,6 +173,13 @@ class PolarChartView @JvmOverloads constructor(
         coordinates.forEach {
             val coordinate = it.toDrawableCoordinates(width, height)
             canvas.drawLine(centerX, centerY, coordinate.x, coordinate.y, vectorPaint)
+        }
+    }
+
+    private fun drawSectors(canvas: Canvas, centerX: Float, centerY: Float) {
+        sectorBounds.forEach{
+            val coordinate = it.toDrawableCoordinates(width, height)
+            canvas.drawLine(centerX, centerY, coordinate.x, coordinate.y, sectorPaint)
         }
     }
 
@@ -196,5 +209,11 @@ class PolarChartView @JvmOverloads constructor(
         return field.map { it.scaleCoordinates() }
     }
 
-    var segmentBounds: List<Int> = listOf()
+    private var sectorBounds: List<PolarCoordinates> = listOf()
+        get () = field.map { it.scaleCoordinates() }
+
+    fun setSectorBounds(boundsAngles: List<Float>) {
+        sectorBounds = boundsAngles.map { PolarCoordinates(DEFAULT_MAX_RADIUS.toFloat(), it) }
+        invalidate()
+    }
 }

@@ -5,7 +5,7 @@ import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinate
 import kotlin.math.cos
 import kotlin.math.sin
 
-object CoordinatesTransformer {
+internal object CoordinatesTransformer {
 
     fun PolarCoordinates.toCartesianCoordinates(): CartesianCoordinates {
         return CartesianCoordinates(

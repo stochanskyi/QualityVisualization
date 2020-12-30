@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.use
 import com.mars.qualityvisualization.R
+import com.mars.qualityvisualization.views.polarChartView.models.CartesianCoordinates
 import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinates
 import com.mars.qualityvisualization.views.polarChartView.transformer.CoordinatesTransformer.toDrawableCoordinates
 import kotlin.math.min
@@ -22,6 +23,7 @@ class PolarChartView @JvmOverloads constructor(
 
     companion object {
         private const val DEFAULT_CIRCLES_COUNT = 10
+        private const val DEFAULT_MAX_RADIUS = 100
     }
 
     private val circlePaint: Paint = Paint()
@@ -32,6 +34,12 @@ class PolarChartView @JvmOverloads constructor(
     private val sectorPaint: Paint = Paint()
 
     private var polygonPath: Path = Path()
+
+    private val maxCoordinatesSize
+        get() = min(
+            width - paddingStart - paddingEnd,
+            height - paddingTop - paddingBottom
+        )
 
     init {
         initPaints()
@@ -114,12 +122,9 @@ class PolarChartView @JvmOverloads constructor(
 
     private fun resolveCirclesSizes() {
         circlesRadius.clear()
-
         if (circlesCount <= 0) return
-        val viewClearWidth = width - paddingStart - paddingEnd
-        val viewClearHeight = height - paddingTop - paddingBottom
 
-        val maxCircleRadius = min(viewClearHeight, viewClearWidth) / 2
+        val maxCircleRadius = maxCoordinatesSize / 2
 
         val step = maxCircleRadius / circlesCount
 
@@ -165,6 +170,16 @@ class PolarChartView @JvmOverloads constructor(
         }
     }
 
+    private fun PolarCoordinates.scaleCoordinates(): PolarCoordinates {
+        return PolarCoordinates(
+            scaleCoordinate(radius),
+            angle
+        )
+    }
+
+    private fun scaleCoordinate(coordinate: Float): Float =
+        coordinate * maxCoordinatesSize / 2 / DEFAULT_MAX_RADIUS
+
     var circlesCount: Int = DEFAULT_CIRCLES_COUNT
         set(value) {
             field = value
@@ -177,4 +192,9 @@ class PolarChartView @JvmOverloads constructor(
             updatePolygonPath()
             invalidate()
         }
+    get() {
+        return field.map { it.scaleCoordinates() }
+    }
+
+    var segmentBounds: List<Int> = listOf()
 }

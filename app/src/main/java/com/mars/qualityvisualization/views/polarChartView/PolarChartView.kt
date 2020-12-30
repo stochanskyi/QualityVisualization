@@ -25,7 +25,11 @@ class PolarChartView @JvmOverloads constructor(
     }
 
     private val circlePaint: Paint = Paint()
-    private val polygonPaint: Paint = Paint()
+    private val coordinatesPaint: Paint = Paint()
+    private val polygonFillPaint: Paint = Paint()
+    private val polygonStrokeColor: Paint = Paint()
+    private val vectorPaint: Paint = Paint()
+    private val sectorPaint: Paint = Paint()
 
     private var polygonPath: Path = Path()
 
@@ -37,13 +41,31 @@ class PolarChartView @JvmOverloads constructor(
     private fun initPaints() {
         circlePaint.apply {
             style = Paint.Style.STROKE
-            color = Color.GRAY
+            color = Color.parseColor("#CCCCCC")
             strokeWidth = 1f
         }
 
-        polygonPaint.apply {
+        polygonStrokeColor.apply {
+            style = Paint.Style.STROKE
+            color = Color.BLACK
+            strokeWidth = 5f
+        }
+
+        polygonFillPaint.apply {
+            style = Paint.Style.FILL
+            color = Color.parseColor("#AA00FF00")
+            strokeWidth = 1f
+        }
+
+        vectorPaint.apply {
             style = Paint.Style.STROKE
             color = Color.RED
+            strokeWidth = 3f
+        }
+
+        coordinatesPaint.apply {
+            style = Paint.Style.STROKE
+            color = Color.parseColor("#336600")
             strokeWidth = 1f
         }
     }
@@ -111,16 +133,36 @@ class PolarChartView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
-        val viewCentreX = width.toFloat() / 2
+        val viewCenterX = width.toFloat() / 2
         val viewCenterY = height.toFloat() / 2
 
-        circlesRadius.forEach {
-            canvas.drawCircle(viewCentreX, viewCenterY, it.toFloat(), circlePaint)
-        }
+        drawCircles(canvas, viewCenterX, viewCenterY)
+        drawCoordinates(canvas, viewCenterX, viewCenterY)
 
-        canvas.drawPath(polygonPath, polygonPaint)
+        canvas.drawPath(polygonPath, polygonFillPaint)
+        drawVectors(canvas, viewCenterX, viewCenterY)
+        canvas.drawPath(polygonPath, polygonStrokeColor)
+
 
         super.onDraw(canvas)
+    }
+
+    private fun drawCircles(canvas: Canvas, centerX: Float, centerY: Float) {
+        circlesRadius.forEach {
+            canvas.drawCircle(centerX, centerY, it.toFloat(), circlePaint)
+        }
+    }
+
+    private fun drawCoordinates(canvas: Canvas, centerX: Float, centerY: Float) {
+        canvas.drawLine(centerX, 0f, centerX, height.toFloat(), coordinatesPaint)
+        canvas.drawLine(0f, centerY, width.toFloat(), centerY, coordinatesPaint)
+    }
+
+    private fun drawVectors(canvas: Canvas, centerX: Float, centerY: Float) {
+        coordinates.forEach {
+            val coordinate = it.toDrawableCoordinates(width, height)
+            canvas.drawLine(centerX, centerY, coordinate.x, coordinate.y, vectorPaint)
+        }
     }
 
     var circlesCount: Int = DEFAULT_CIRCLES_COUNT

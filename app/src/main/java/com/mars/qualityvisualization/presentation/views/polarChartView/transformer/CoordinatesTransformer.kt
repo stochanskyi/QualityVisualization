@@ -1,7 +1,7 @@
-package com.mars.qualityvisualization.views.polarChartView.transformer
+package com.mars.qualityvisualization.presentation.views.polarChartView.transformer
 
-import com.mars.qualityvisualization.views.polarChartView.models.CartesianCoordinates
-import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinates
+import com.mars.qualityvisualization.presentation.views.polarChartView.models.CartesianCoordinates
+import com.mars.qualityvisualization.presentation.views.polarChartView.models.PolarCoordinates
 import kotlin.math.cos
 import kotlin.math.sin
 

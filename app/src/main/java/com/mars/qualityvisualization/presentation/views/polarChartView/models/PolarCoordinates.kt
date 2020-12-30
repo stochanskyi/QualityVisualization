@@ -1,4 +1,4 @@
-package com.mars.qualityvisualization.views.polarChartView.models
+package com.mars.qualityvisualization.presentation.views.polarChartView.models
 
 /**
  * Coordinates in polar system

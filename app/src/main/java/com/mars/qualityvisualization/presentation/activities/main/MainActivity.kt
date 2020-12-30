@@ -1,10 +1,10 @@
-package com.mars.qualityvisualization.activities.main
+package com.mars.qualityvisualization.presentation.activities.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mars.qualityvisualization.R
-import com.mars.qualityvisualization.views.polarChartView.PolarChartView
-import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinates
+import com.mars.qualityvisualization.presentation.views.polarChartView.PolarChartView
+import com.mars.qualityvisualization.presentation.views.polarChartView.models.PolarCoordinates
 import java.lang.Math.PI
 
 class MainActivity : AppCompatActivity() {

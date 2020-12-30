@@ -1,4 +1,4 @@
-package com.mars.qualityvisualization.views.polarChartView
+package com.mars.qualityvisualization.presentation.views.polarChartView
 
 import android.content.Context
 import android.graphics.Canvas
@@ -9,8 +9,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.use
 import com.mars.qualityvisualization.R
-import com.mars.qualityvisualization.views.polarChartView.models.PolarCoordinates
-import com.mars.qualityvisualization.views.polarChartView.transformer.CoordinatesTransformer.toDrawableCoordinates
+import com.mars.qualityvisualization.presentation.views.polarChartView.models.PolarCoordinates
+import com.mars.qualityvisualization.presentation.views.polarChartView.transformer.CoordinatesTransformer.toDrawableCoordinates
 import kotlin.math.min
 
 class PolarChartView @JvmOverloads constructor(

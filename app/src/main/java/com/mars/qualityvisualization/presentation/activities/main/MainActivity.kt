@@ -3,11 +3,10 @@ package com.mars.qualityvisualization.presentation.activities.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mars.qualityvisualization.R
-import com.mars.qualityvisualization.presentation.fragments.MenuFragment
-import com.mars.qualityvisualization.presentation.views.polarChartView.PolarChartView
-import com.mars.qualityvisualization.presentation.views.polarChartView.models.PolarCoordinates
+import com.mars.qualityvisualization.data.marksRepository.models.ExpertMarksGroup
+import com.mars.qualityvisualization.presentation.fragments.groupInfo.GroupInfoFragment
+import com.mars.qualityvisualization.presentation.fragments.start.StartFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Math.PI
 
 class MainActivity : AppCompatActivity(), AppNavigator {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,15 +14,18 @@ class MainActivity : AppCompatActivity(), AppNavigator {
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.beginTransaction()
-            .add(fragmentContainer.id, MenuFragment.newInstance())
+            .add(fragmentContainer.id, StartFragment.newInstance())
             .commit()
     }
 
-    override fun openCategoryScreen() {
-        TODO("Not yet implemented")
+    override fun openCategoryScreen(data: ExpertMarksGroup) {
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .add(fragmentContainer.id, GroupInfoFragment.newInstance(data))
+            .commit()
     }
 
     override fun openPolarScreen() {
-        TODO("Not yet implemented")
+        //TODO
     }
 }

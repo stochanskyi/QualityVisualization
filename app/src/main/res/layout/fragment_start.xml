@@ -25,6 +25,7 @@
         android:id="@+id/buttonFirst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bg_start_button"
         android:text="Для галузі"
         app:layout_constraintTop_toBottomOf="@id/textTitle"
@@ -58,13 +59,24 @@
         android:id="@+id/buttonFourth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
         android:background="@drawable/bg_start_button"
         android:text="Для користувачів"
         app:layout_constraintTop_toBottomOf="@id/buttonThird"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonFifth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/buttonFifth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/bg_start_button"
+        android:text="Для узагальнених"
+        app:layout_constraintTop_toBottomOf="@id/buttonFourth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

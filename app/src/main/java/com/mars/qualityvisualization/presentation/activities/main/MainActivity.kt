@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mars.qualityvisualization.R
 import com.mars.qualityvisualization.data.marksRepository.models.ExpertMarksGroup
+import com.mars.qualityvisualization.presentation.fragments.chart.ChartFragment
 import com.mars.qualityvisualization.presentation.fragments.groupInfo.GroupInfoFragment
 import com.mars.qualityvisualization.presentation.fragments.start.StartFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,7 +26,10 @@ class MainActivity : AppCompatActivity(), AppNavigator {
             .commit()
     }
 
-    override fun openPolarScreen() {
-        //TODO
+    override fun openPolarScreen(data: ExpertMarksGroup) {
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .add(fragmentContainer.id, ChartFragment.newInstance(data))
+            .commit()
     }
 }

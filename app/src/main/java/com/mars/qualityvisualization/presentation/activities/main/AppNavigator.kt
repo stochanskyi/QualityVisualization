@@ -4,5 +4,5 @@ import com.mars.qualityvisualization.data.marksRepository.models.ExpertMarksGrou
 
 interface AppNavigator {
     fun openCategoryScreen(data: ExpertMarksGroup)
-    fun openPolarScreen()
+    fun openPolarScreen(data: ExpertMarksGroup)
 }

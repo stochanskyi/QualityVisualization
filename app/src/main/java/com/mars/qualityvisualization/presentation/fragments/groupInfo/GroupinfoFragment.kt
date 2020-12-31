@@ -17,7 +17,7 @@ class GroupInfoFragment : Fragment(R.layout.fragment_group_info) {
     companion object {
         private const val DATA_KEY = "key_input_data"
 
-        fun newInstance(data: ExpertMarksGroup) : GroupInfoFragment {
+        fun newInstance(data: ExpertMarksGroup): GroupInfoFragment {
             return GroupInfoFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(DATA_KEY, data)
@@ -49,6 +49,20 @@ class GroupInfoFragment : Fragment(R.layout.fragment_group_info) {
             adapter = MarksAdapter().apply {
                 updateItems(data.marks.toViewModels())
             }
+        }
+
+        buttonDraw.setOnClickListener { _ ->
+            appNavigator?.openPolarScreen(
+                ExpertMarksGroup(
+                    data.groupName,
+                    data.marks.mapValues {
+                        ExpertMark(
+                            it.value.resolveComplexMark(),
+                            it.value.weight
+                        )
+                    }
+                )
+            )
         }
     }
 

@@ -9,9 +9,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/textAngles"
+        android:id="@+id/textTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/purple_500"
         android:textSize="30sp"
@@ -20,11 +21,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Hola"/>
 
+    <TextView
+        android:id="@+id/textSectorAngles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12, "/>
+
+    <TextView
+        android:id="@+id/textVectors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textSectorAngles"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12, "/>
+
     <com.mars.qualityvisualization.presentation.views.polarChartView.PolarChartView
         android:id="@+id/viewPolarChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/textAngles"
+        app:layout_constraintTop_toBottomOf="@id/textVectors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

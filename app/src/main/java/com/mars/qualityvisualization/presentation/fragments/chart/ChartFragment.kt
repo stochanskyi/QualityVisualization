@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.mars.qualityvisualization.R
+import com.mars.qualityvisualization.data.marksRepository.models.ExpertMark
 import com.mars.qualityvisualization.data.marksRepository.models.ExpertMarksGroup
 import com.mars.qualityvisualization.presentation.views.polarChartView.models.PolarCoordinates
 import kotlinx.android.synthetic.main.fragment_chart.*
@@ -39,7 +40,10 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         val angles = processAngles()
         val coordinatess = createVectors(angles)
 
-        textAngles.text = angles.joinToString(separator = ", ") { radianToAngleString(it) }
+        textTitle.text = data.groupName
+        textSectorAngles.text = "Sectorangles: ${angles.toSectorsString()}"
+        textVectors.text = "Vectors: ${coordinatess.toVectorsString()}"
+
 
         viewPolarChart.apply {
             setSectorBounds(angles)
@@ -85,6 +89,17 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         return coordinates.toList()
     }
 
+    private fun List<Float>.toSectorsString(): String {
+        return joinToString(separator = ", ") { radianToAngleString(it) }
+    }
+
+    private fun List<PolarCoordinates>.toVectorsString(): String {
+        return joinToString(separator = ", ") { it.toVectorString() }
+    }
+
+    private fun PolarCoordinates.toVectorString(): String {
+        return "{${radianToAngleString(angle)}°, $radius}"
+    }
 
     private fun radianToAngleString(radian: Float): String = String.format("%.1f", radian * 180 / PI)
 }

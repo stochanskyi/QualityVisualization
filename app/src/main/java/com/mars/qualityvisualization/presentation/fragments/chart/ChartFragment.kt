@@ -39,6 +39,8 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         val angles = processAngles()
         val coordinatess = createVectors(angles)
 
+        textAngles.text = angles.joinToString(separator = ", ") { radianToAngleString(it) }
+
         viewPolarChart.apply {
             setSectorBounds(angles)
             coordinates = coordinatess
@@ -84,4 +86,5 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
     }
 
 
+    private fun radianToAngleString(radian: Float): String = String.format("%.1f", radian * 180 / PI)
 }

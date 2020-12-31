@@ -60,7 +60,8 @@ class GroupInfoFragment : Fragment(R.layout.fragment_group_info) {
                             it.value.resolveComplexMark(),
                             it.value.weight
                         )
-                    }
+                    },
+                    1
                 )
             )
         }

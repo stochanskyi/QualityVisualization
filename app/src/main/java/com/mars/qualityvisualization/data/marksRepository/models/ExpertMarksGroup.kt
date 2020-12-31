@@ -6,5 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ExpertMarksGroup(
     val groupName: String,
-    val marks: Map<String, ExpertMark>
+    val marks: Map<String, ExpertMark>,
+    val groupWeight: Int
 ) : Parcelable

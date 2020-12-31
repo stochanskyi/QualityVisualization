@@ -23,7 +23,8 @@ class MarksRepository {
                     ExpertMark(9, 8),
                     ExpertMark(6, 7),
                 )
-            )
+            ),
+            7
         ),
 
         ExpertMarksGroup(
@@ -41,7 +42,8 @@ class MarksRepository {
                     ExpertMark(7, 6),
                     ExpertMark(5, 8),
                 )
-            )
+            ),
+            8
         ),
         ExpertMarksGroup(
             "Експерти з програмування",
@@ -58,7 +60,8 @@ class MarksRepository {
                     ExpertMark(6, 9),
                     ExpertMark(9, 6),
                 )
-            )
+            ),
+            9
         ),
         ExpertMarksGroup(
             "Оцінки користувачів",
@@ -75,9 +78,9 @@ class MarksRepository {
                     ExpertMark(8, 6),
                     ExpertMark(4, 10),
                 )
-            )
+            ),
+            5
         )
-
     )
 
     private fun createMarksMapForList(data: List<ExpertMark>): Map<String, ExpertMark> {
